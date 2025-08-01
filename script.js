@@ -22,16 +22,38 @@ function renderProducts() {
 }
 
 // Render cart list
-function renderCart() {}
+function renderCart() {
+	cartList.innerHTML = "";
+  cart.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = `${item.name} - $${item.price}`;
+    cartList.appendChild(li);
+  });
+}
 
 // Add item to cart
-function addToCart(productId) {}
+function addToCart(productId) {
+	cart.push(product);
+  sessionStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+}
 
 // Remove item from cart
-function removeFromCart(productId) {}
+function removeFromCart(productId) {
+	const index = cart.findIndex(item => item.id === productId);
+  if (index !== -1) {
+    cart.splice(index, 1); 
+    sessionStorage.setItem("cart", JSON.stringify(cart));
+    renderCart(); 
+  }
+}
 
 // Clear cart
-function clearCart() {}
+function clearCart() {
+	cart = [];
+  sessionStorage.removeItem("cart");
+  renderCart();
+}
 
 // Initial render
 renderProducts();
